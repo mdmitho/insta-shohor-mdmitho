@@ -17,8 +17,8 @@ const isLiked = (id) => {
 
 const addToLiked = (id) => {
   console.log(id)
-    isLiked(id); 
-    showPosts('posts');
+    isLiked.push(id); 
+    showPosts(posts);
 };
 
 const reportPost = (id) => {
@@ -52,6 +52,8 @@ const switchTab = (id) => {
 };
 
 const createPost = (post) => {
+  const comment = post.comments[0]
+
     const div = document.createElement( "article" );
     div.classList.add( "post" );
     div.innerHTML = `
@@ -102,7 +104,7 @@ const createPost = (post) => {
                   </button>
                 </div>
 
-                <div class="post__content">${displayContent(post.description)}</div>
+                <div class="post__content">${displayContent(post.description.slice(0, 30))}</div>
 
                 <div class="post__infos">
                   <div class="post__likes">
@@ -120,9 +122,9 @@ const createPost = (post) => {
                   <div class="post__description">
                     <small>
                       <a class="post__name--underline" href="#">
-                          ${post.comments?.user}
+                          ${comment.user}
                       </a>
-                      ${post.comments?.text}
+                      ${comment.text}
                     </small>
                   </div>
                   <span class="post__date-time">30 minutes ago</span>
@@ -133,10 +135,12 @@ const createPost = (post) => {
 };
 
 const showPosts = (posts) => {
+
     const productsContainer = document.getElementById( "posts" );
     productsContainer.innerHTML = "";
 
     posts.forEach((post) => {
+     
         const div = createPost(post);
         productsContainer.appendChild(div);
     });
